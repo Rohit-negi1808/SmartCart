@@ -1,0 +1,12 @@
+.compare-page { padding: 40px 0 80px; }
+.compare-empty-picker { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.compare-table-wrap { overflow-x: auto; margin-top: 24px; }
+.compare-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+.compare-table th, .compare-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+.compare-table th { color: var(--text-faint); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; width: 160px; }
+.compare-col-header { min-width: 200px; }
+.compare-col-header img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 10px; }
+.compare-col-header h4 { font-size: 0.98rem; margin: 0 0 4px; }
+.compare-remove { background: none; border: none; color: var(--danger); font-size: 0.78rem; cursor: pointer; padding: 0; margin-top: 6px; }
+.compare-cell-diff { color: var(--accent); font-weight: 600; }
+.ai-compare-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px; margin-top: 32px; }

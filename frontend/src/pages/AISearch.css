@@ -1,0 +1,30 @@
+.ai-search-hero { padding: 56px 0 28px; text-align: center; }
+.ai-search-hero h1 { font-size: clamp(1.8rem, 3.4vw, 2.4rem); max-width: 680px; margin: 0 auto 14px; }
+.ai-search-hero p { max-width: 560px; margin: 0 auto; }
+.ai-search-box { max-width: 720px; margin: 32px auto 0; }
+
+.ai-processing {
+  max-width: 480px; margin: 40px auto; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.ai-processing-steps { display: flex; flex-direction: column; gap: 8px; text-align: left; width: 100%; }
+.ai-processing-step { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text-faint); }
+.ai-processing-step.is-active { color: var(--text); }
+.ai-processing-step.is-done { color: var(--success); }
+
+.requirements-panel {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 22px 24px; margin: 32px 0;
+}
+.requirements-panel h4 { margin-bottom: 14px; }
+.requirements-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.requirement-chip {
+  background: var(--surface-raised); border: 1px solid var(--border); border-radius: 999px;
+  padding: 7px 14px; font-size: 0.85rem; font-family: var(--font-mono); color: var(--text);
+}
+.requirement-chip b { color: var(--accent); font-weight: 600; }
+
+.ai-warning {
+  background: rgba(242,184,75,0.1); border: 1px solid rgba(242,184,75,0.3); color: var(--accent);
+  padding: 10px 14px; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 20px;
+}
