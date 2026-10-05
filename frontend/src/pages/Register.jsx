@@ -30,17 +30,31 @@ const Register = () => {
     } catch (err) {
       const message = err.friendlyMessage || '';
 
-      // On the live production deployment, the existing backend returns
-      // this message when the OTP email cannot be delivered.
-      // Show the professional demo notice instead of a raw server error.
-      if (
+      /*
+       * LIVE DEPLOYMENT:
+       * Your existing api.js converts the Render/network failure into:
+       * "Cannot reach the server. Please try again."
+       *
+       * Instead of showing that technical error to a visitor,
+       * show the professional SmartCart live-demo notice.
+       */
+      const isLiveEmailDeliveryIssue =
         import.meta.env.PROD &&
-        message.includes('Could not send the verification email')
-      ) {
+        (
+          message === 'Cannot reach the server. Please try again.' ||
+          message.includes('Could not send the verification email') ||
+          message.includes('verification email') ||
+          err?.response?.status === 502 ||
+          err?.code === 'ERR_NETWORK'
+        );
+
+      if (isLiveEmailDeliveryIssue) {
         setShowDemoNotice(true);
       } else {
-        // Keep normal error handling unchanged for every other error.
-        setError(err.friendlyMessage || 'Registration failed');
+        // Keep all other existing errors unchanged.
+        setError(
+          err.friendlyMessage || 'Registration failed'
+        );
       }
     } finally {
       setLoading(false);
@@ -82,7 +96,9 @@ const Register = () => {
             className="btn btn-primary btn-block"
             disabled={loading || !email.trim()}
           >
-            {loading ? 'Sending verification code...' : 'Send OTP'}
+            {loading
+              ? 'Sending verification code...'
+              : 'Send OTP'}
           </button>
         </form>
 
@@ -92,7 +108,6 @@ const Register = () => {
         </div>
       </div>
 
-      {/* Live deployment email-delivery notice */}
       {showDemoNotice && (
         <div
           className="demo-notice-overlay"
@@ -102,7 +117,12 @@ const Register = () => {
             }
           }}
         >
-          <div className="demo-notice-modal">
+          <div
+            className="demo-notice-modal card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="demo-notice-title"
+          >
             <button
               type="button"
               className="demo-notice-close"
@@ -116,25 +136,30 @@ const Register = () => {
               LIVE DEMO NOTICE
             </div>
 
-            <h2>Email verification unavailable</h2>
+            <h2 id="demo-notice-title">
+              Email verification unavailable
+            </h2>
 
             <p>
-              SmartCart uses email-based OTP verification for account
-              security. In this live demo, the current free-tier hosting
-              environment restricts outbound SMTP email delivery, so a
-              verification code cannot be delivered from the deployed
-              application.
+              SmartCart uses email-based OTP verification for
+              account security. In this live demo, the current
+              free-tier hosting environment restricts outbound
+              SMTP email delivery, so a verification code cannot
+              be delivered from the deployed application.
             </p>
 
             <p>
-              The complete email OTP authentication system is implemented
-              and works in the local development environment. Live email
-              verification requires SMTP-enabled or paid hosting, or an
-              email delivery API.
+              The complete email OTP authentication system is
+              implemented and works in the local development
+              environment. Live email verification requires
+              SMTP-enabled or paid hosting, or an email delivery
+              service.
             </p>
 
-            <div className="demo-notice-features">
-              <strong>You can still explore SmartCart:</strong>
+            <div className="demo-notice-available">
+              <strong>
+                You can still explore SmartCart:
+              </strong>
 
               <span>
                 ✓ Laptop browsing and search
@@ -155,7 +180,7 @@ const Register = () => {
 
             <button
               type="button"
-              className="btn btn-primary btn-block demo-notice-button"
+              className="btn btn-primary btn-block"
               onClick={() => setShowDemoNotice(false)}
             >
               Continue exploring SmartCart
